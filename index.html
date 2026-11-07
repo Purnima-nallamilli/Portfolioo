@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nallamilli Purnima | SDE & GenAI Engineer Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lightBg: '#FAFAFA',
+                        lightCard: '#FFFFFF',
+                        darkText: '#111827',
+                        subText: '#4B5563',
+                        purplePrimary: '#7C3AED',
+                        purpleHover: '#6D28D9',
+                        purpleLight: '#F3E8FF',
+                        purpleBorder: '#DDD6FE',
+                        purpleGlow: 'rgba(124, 58, 237, 0.08)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #111827;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7C3AED;
+        }
+
+        /* Glassmorphism / Clean light card styling */
+        .glass-panel {
+            background: #FFFFFF;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            border-color: #C4B5FD;
+            box-shadow: 0 12px 30px -8px rgba(124, 58, 237, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* Text gradient */
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #111827 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        /* Tag badge styling */
+        .tech-badge {
+            background: #F3E8FF;
+            border: 1px solid #DDD6FE;
+            color: #6D28D9;
+        }
+    </style>
+</head>
+<body class="relative antialiased selection:bg-purplePrimary selection:text-white">
+
+    <!-- Soft Ambient Purple Glowing Orbs -->
+    <div class="fixed top-0 left-1/4 -translate-x-1/2 w-[550px] h-[550px] bg-purpleGlow rounded-full blur-[140px] pointer-events-none z-0 animate-pulse-glow"></div>
+    <div class="fixed bottom-1/4 right-10 w-[450px] h-[450px] bg-purpleGlow rounded-full blur-[160px] pointer-events-none z-0 animate-pulse-glow" style="animation-delay: 2s;"></div>
+
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-gray-200/80 px-4 sm:px-8 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="text-xl font-extrabold tracking-wider font-mono flex items-center gap-2">
+                <span class="text-purplePrimary">&lt;</span>
+                <span class="text-gray-900">PURNIMA</span>
+                <span class="text-purplePrimary">/&gt;</span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-700">
+                <a href="#about" class="hover:text-purplePrimary transition-colors">About</a>
+                <a href="#experience" class="hover:text-purplePrimary transition-colors">Experience</a>
+                <a href="#projects" class="hover:text-purplePrimary transition-colors">Projects</a>
+                <a href="#skills" class="hover:text-purplePrimary transition-colors">Skills</a>
+                <a href="#achievements" class="hover:text-purplePrimary transition-colors">Achievements</a>
+                <a href="#contact" class="hover:text-purplePrimary transition-colors">Contact</a>
+            </div>
+
+            <!-- CTA Button Nav -->
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden sm:inline-flex items-center px-4 py-2 text-xs font-semibold rounded-lg bg-purplePrimary hover:bg-purpleHover text-white shadow-md shadow-purplePrimary/20 transition-all">
+                    Hire Me
+                </a>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 hover:text-purplePrimary focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden pt-4 pb-2 px-2 flex flex-col space-y-3 border-t border-gray-200 mt-3 text-gray-700 text-sm">
+            <a href="#about" class="mobile-link hover:text-purplePrimary">About</a>
+            <a href="#experience" class="mobile-link hover:text-purplePrimary">Experience</a>
+            <a href="#projects" class="mobile-link hover:text-purplePrimary">Projects</a>
+            <a href="#skills" class="mobile-link hover:text-purplePrimary">Skills</a>
+            <a href="#achievements" class="mobile-link hover:text-purplePrimary">Achievements</a>
+            <a href="#contact" class="mobile-link hover:text-purplePrimary">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="relative z-10 pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-24 md:space-y-32">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-[85vh] flex flex-col justify-center items-start pt-8">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purpleLight border border-purpleBorder text-purpleHover text-xs font-mono mb-6 font-medium">
+                <span class="w-2 h-2 rounded-full bg-purplePrimary animate-ping"></span>
+                Available for SDE & GenAI Roles (2027 Graduate)
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-4 leading-none">
+                Hi, I'm <span class="text-gradient-purple">Nallamilli Purnima</span>
+            </h1>
+
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-purpleHover mb-6 font-mono">
+                Software Development Engineer <span class="text-gray-400">&</span> AI / GenAI Developer
+            </h2>
+
+            <p class="max-w-2xl text-gray-600 text-base sm:text-lg leading-relaxed mb-8">
+                B.Tech Information Technology student at Vishnu Institute of Technology with a <span class="text-gray-900 font-bold">9.29 CGPA</span>. Experienced in building Python REST APIs, agentic multi-agent systems (<span class="text-purpleHover font-semibold">LangGraph & MCP</span>), Graph RAG architectures, and responsive full-stack applications.
+            </p>
+
+            <!-- Social Links & Contact Badges -->
+            <div class="flex flex-wrap items-center gap-4 mb-8 text-sm">
+                <a href="mailto:nallamillipurnima@gmail.com" class="flex items-center gap-2 text-gray-700 hover:text-purplePrimary transition-colors font-medium">
+                    <i class="fa-solid fa-envelope text-purplePrimary"></i> nallamillipurnima@gmail.com
+                </a>
+                <span class="text-gray-300 hidden sm:inline">|</span>
+                <a href="tel:9391630959" class="flex items-center gap-2 text-gray-700 hover:text-purplePrimary transition-colors font-medium">
+                    <i class="fa-solid fa-phone text-purplePrimary"></i> +91 9391630959
+                </a>
+            </div>
+
+            <!-- Social Media Icon Buttons -->
+            <div class="flex items-center gap-4 mb-10">
+                <a href="https://linkedin.com" target="_blank" title="LinkedIn" class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-gray-600 hover:text-purplePrimary hover:border-purplePrimary/50 transition-all">
+                    <i class="fa-brands fa-linkedin-in text-lg"></i>
+                </a>
+                <a href="https://github.com" target="_blank" title="GitHub" class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-gray-600 hover:text-purplePrimary hover:border-purplePrimary/50 transition-all">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </a>
+                <a href="https://leetcode.com" target="_blank" title="LeetCode" class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-gray-600 hover:text-purplePrimary hover:border-purplePrimary/50 transition-all">
+                    <i class="fa-solid fa-code text-lg"></i>
+                </a>
+                <a href="https://geeksforgeeks.org" target="_blank" title="GeeksforGeeks" class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-gray-600 hover:text-purplePrimary hover:border-purplePrimary/50 transition-all font-mono font-bold text-xs">
+                    GfG
+                </a>
+            </div>
+
+            <!-- Call to Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4">
+                <a href="#projects" class="px-6 py-3.5 rounded-xl bg-purplePrimary hover:bg-purpleHover text-white font-semibold shadow-lg shadow-purplePrimary/25 hover:scale-[1.02] transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-rocket text-sm"></i> View Projects
+                </a>
+                <a href="#contact" class="px-6 py-3.5 rounded-xl glass-panel text-gray-800 hover:text-purplePrimary border border-gray-200 hover:border-purpleBorder hover:scale-[1.02] transition-all flex items-center gap-2 font-semibold">
+                    <i class="fa-solid fa-paper-plane text-sm text-purplePrimary"></i> Contact Me
+                </a>
+                <button onclick="downloadResume()" class="px-6 py-3.5 rounded-xl glass-panel text-gray-800 hover:text-purplePrimary border border-gray-200 hover:border-purpleBorder hover:scale-[1.02] transition-all flex items-center gap-2 font-mono text-sm font-semibold">
+                    <i class="fa-solid fa-file-arrow-down text-purplePrimary"></i> Download Resume
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. About & Education Section -->
+        <section id="about" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gray-200 pb-4">
+                <div>
+                    <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Academic Background</h3>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">About Me</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Academic Profile Card -->
+                <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-2xl glass-panel-hover flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-purplePrimary">
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                            <h3 class="text-xl font-bold text-gray-900">Education Details</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                            Pursuing B.Tech in Information Technology at <span class="text-gray-900 font-semibold">Vishnu Institute of Technology</span> (Bhimavaram, AP). Combining strong computer science fundamentals (DSA, DBMS, OS, Networks) with modern GenAI frameworks and production-level code.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                            <!-- B.Tech Card -->
+                            <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-1">
+                                <span class="text-xs text-gray-500 font-mono">2023 - 2027</span>
+                                <h4 class="text-base font-bold text-gray-900">B.Tech in IT</h4>
+                                <p class="text-xs text-gray-600">Vishnu Institute of Technology</p>
+                                <div class="pt-2 text-purpleHover font-bold text-sm">
+                                    CGPA: <span class="text-gray-900 font-extrabold text-lg">9.29</span> / 10
+                                </div>
+                            </div>
+
+                            <!-- Intermediate Card -->
+                            <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-1">
+                                <span class="text-xs text-gray-500 font-mono">2021 - 2023</span>
+                                <h4 class="text-base font-bold text-gray-900">Intermediate (MPC)</h4>
+                                <p class="text-xs text-gray-600">Tirumala Mahila Junior Kalasala</p>
+                                <div class="pt-2 text-purpleHover font-bold text-sm">
+                                    Score: <span class="text-gray-900 font-extrabold text-lg">97.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlight Stat Cards Grid -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="glass-panel p-6 rounded-2xl glass-panel-hover flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-code-branch text-2xl text-purplePrimary mb-2"></i>
+                        <span class="text-3xl font-extrabold text-gray-900 font-mono">5+</span>
+                        <span class="text-xs text-gray-600 mt-1 font-medium">Full-Stack & AI Projects</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl glass-panel-hover flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-trophy text-2xl text-purplePrimary mb-2"></i>
+                        <span class="text-3xl font-extrabold text-gray-900 font-mono">Top 3</span>
+                        <span class="text-xs text-gray-600 mt-1 font-medium">500+ Dev Challenge</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl glass-panel-hover flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-medal text-2xl text-purplePrimary mb-2"></i>
+                        <span class="text-3xl font-extrabold text-gray-900 font-mono">Top 10</span>
+                        <span class="text-xs text-gray-600 mt-1 font-medium">Smart India Hackathon</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl glass-panel-hover flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-shield-halved text-2xl text-purplePrimary mb-2"></i>
+                        <span class="text-3xl font-extrabold text-gray-900 font-mono">OCI</span>
+                        <span class="text-xs text-gray-600 mt-1 font-medium">Oracle Cloud Certified</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Experience Section -->
+        <section id="experience" class="space-y-8">
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Internship Experience</h3>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Experience</h2>
+            </div>
+
+            <div class="relative border-l-2 border-purpleBorder ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-10">
+                <!-- Experience Item -->
+                <div class="relative group">
+                    <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-purplePrimary border-4 border-white group-hover:scale-125 transition-all shadow-sm"></div>
+
+                    <div class="glass-panel p-6 sm:p-8 rounded-2xl glass-panel-hover space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">AI & Cloud Computing Intern</h3>
+                                <p class="text-sm text-purpleHover font-semibold">Edunet Foundation <span class="text-gray-500 font-normal">(IBM Collaboration)</span></p>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs font-mono text-gray-600 bg-purpleLight px-3 py-1.5 rounded-full border border-purpleBorder w-fit font-medium">
+                                <i class="fa-regular fa-calendar text-purplePrimary"></i> Jul 2025 – Aug 2025 | Remote
+                            </div>
+                        </div>
+
+                        <ul class="space-y-3 text-sm sm:text-base text-gray-600">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-chevron-right text-purplePrimary mt-1 text-xs"></i>
+                                <span>Developed Python-based REST APIs and backend components for AI-powered applications.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-chevron-right text-purplePrimary mt-1 text-xs"></i>
+                                <span>Gained practical exposure to Generative AI, pre-trained LLM architectures, cloud computing, and API integration.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-chevron-right text-purplePrimary mt-1 text-xs"></i>
+                                <span>Applied software engineering practices in backend development, debugging, and application workflow optimization.</span>
+                            </li>
+                        </ul>
+
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <span class="tech-badge px-2.5 py-1 rounded-md text-xs font-mono font-medium">Python</span>
+                            <span class="tech-badge px-2.5 py-1 rounded-md text-xs font-mono font-medium">REST APIs</span>
+                            <span class="tech-badge px-2.5 py-1 rounded-md text-xs font-mono font-medium">Generative AI</span>
+                            <span class="tech-badge px-2.5 py-1 rounded-md text-xs font-mono font-medium">Cloud Computing</span>
+                            <span class="tech-badge px-2.5 py-1 rounded-md text-xs font-mono font-medium">Workflow Optimization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Projects Section -->
+        <section id="projects" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gray-200 pb-4">
+                <div>
+                    <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Featured Work</h3>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Projects</h2>
+                </div>
+
+                <!-- Project Filter Tabs -->
+                <div id="projectFilters" class="flex flex-wrap gap-2 glass-panel p-1.5 rounded-xl border border-gray-200">
+                    <button data-filter="all" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold text-white bg-purplePrimary transition-all shadow-sm">All Projects</button>
+                    <button data-filter="ai" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-purplePrimary transition-all">AI / GenAI</button>
+                    <button data-filter="fullstack" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-600 hover:text-purplePrimary transition-all">Full-Stack</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Project 1: TripMate AI -->
+                <div class="project-card glass-panel rounded-2xl p-6 glass-panel-hover flex flex-col justify-between space-y-4" data-category="ai">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-purpleHover font-bold uppercase tracking-wider">Multi-Agent AI</span>
+                            <span class="inline-flex items-center gap-1 text-[10px] font-mono bg-purpleLight text-purpleHover border border-purpleBorder px-2 py-0.5 rounded-full font-semibold">
+                                Live Demo
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 hover:text-purplePrimary transition-colors">TripMate AI</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                            Developed a multi-agent AI travel planner using LangGraph and MCP, integrating supervisor orchestration, guardrails, and Human-in-the-Loop approval workflows.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">LangGraph</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Python</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">FastAPI</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Groq</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">PostgreSQL</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">MCP</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono pt-2">
+                            <a href="#" class="text-purplePrimary hover:text-purpleHover flex items-center gap-1.5 font-bold">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Graph-Based Question Answering System -->
+                <div class="project-card glass-panel rounded-2xl p-6 glass-panel-hover flex flex-col justify-between space-y-4" data-category="ai">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-purpleHover font-bold uppercase tracking-wider">Graph RAG</span>
+                            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-purplePrimary"><i class="fa-brands fa-github text-lg"></i></a>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 hover:text-purplePrimary transition-colors">Graph-Based QA System</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                            Built a Graph RAG-based question answering system using Neo4j knowledge graphs and Gemini-generated Cypher queries, benchmarking its performance against Vector RAG using ChromaDB.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Neo4j Aura</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Graph RAG</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Vector RAG</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">ChromaDB</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">LangChain</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Gemini API</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Streamlit</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono pt-2">
+                            <a href="https://github.com" target="_blank" class="text-purplePrimary hover:text-purpleHover flex items-center gap-1.5 font-bold">
+                                <i class="fa-brands fa-github"></i> Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Personal Finance Tracker -->
+                <div class="project-card glass-panel rounded-2xl p-6 glass-panel-hover flex flex-col justify-between space-y-4" data-category="fullstack">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-purpleHover font-bold uppercase tracking-wider">Web Application</span>
+                            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-purplePrimary"><i class="fa-brands fa-github text-lg"></i></a>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 hover:text-purplePrimary transition-colors">Personal Finance Tracker</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                            Developed a responsive finance dashboard to track income and expenses, manage category-based budgets, and visualize monthly spending through interactive charts.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Next.js</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">React.js</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">TailwindCSS</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Recharts</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">MongoDB</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">TypeScript</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono pt-2">
+                            <a href="https://github.com" target="_blank" class="text-purplePrimary hover:text-purpleHover flex items-center gap-1.5 font-bold">
+                                <i class="fa-brands fa-github"></i> Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: InnovaCare -->
+                <div class="project-card glass-panel rounded-2xl p-6 glass-panel-hover flex flex-col justify-between space-y-4" data-category="fullstack">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-purpleHover font-bold uppercase tracking-wider">Healthcare Portal</span>
+                            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-purplePrimary"><i class="fa-brands fa-github text-lg"></i></a>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 hover:text-purplePrimary transition-colors">InnovaCare</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                            Built a full-stack medical management application enabling patients to book doctor appointments and attend virtual consultations.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">HTML</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">CSS</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">React.js</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Node.js</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">MySQL</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono pt-2">
+                            <a href="https://github.com" target="_blank" class="text-purplePrimary hover:text-purpleHover flex items-center gap-1.5 font-bold">
+                                <i class="fa-brands fa-github"></i> Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: RAG-Based RBAC Chatbot -->
+                <div class="project-card glass-panel rounded-2xl p-6 glass-panel-hover flex flex-col justify-between space-y-4" data-category="ai">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-mono text-purpleHover font-bold uppercase tracking-wider">AI Security</span>
+                            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-purplePrimary"><i class="fa-brands fa-github text-lg"></i></a>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 hover:text-purplePrimary transition-colors">RAG-Based RBAC Chatbot</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                            Developed a role-based RAG chatbot that retrieves relevant document information while enforcing user permissions and access restrictions.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-gray-100">
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Python</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">LangChain</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">RAG</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">Vector Databases</span>
+                            <span class="tech-badge px-2 py-0.5 rounded text-[11px] font-mono font-medium">RBAC</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-mono pt-2">
+                            <a href="https://github.com" target="_blank" class="text-purplePrimary hover:text-purpleHover flex items-center gap-1.5 font-bold">
+                                <i class="fa-brands fa-github"></i> Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Technical Skills Section -->
+        <section id="skills" class="space-y-8">
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Skill Matrix</h3>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Technical Skills</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Programming Languages -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-code text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Programming Languages</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-sm font-mono text-gray-800 font-medium">C</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-sm font-mono text-gray-800 font-medium">Python</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-sm font-mono text-gray-800 font-medium">Java</span>
+                    </div>
+                </div>
+
+                <!-- Core CS -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-terminal text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Core CS</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Data Structures & Algorithms</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">OOP</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">DBMS</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Operating Systems</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Computer Networks</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">SDLC</span>
+                    </div>
+                </div>
+
+                <!-- AI / GenAI -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-robot text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">AI / GenAI</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">LangChain</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">LangGraph</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">RAG</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Graph RAG</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Vector RAG</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Multi-Agent Systems</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">MCP</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Prompt Engineering</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Embeddings</span>
+                    </div>
+                </div>
+
+                <!-- Frontend -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-desktop text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Frontend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">HTML5</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">CSS3</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">JavaScript</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">React.js</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Bootstrap</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Tailwind CSS</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Responsive Web Design</span>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-server text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Backend</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Node.js</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Express.js</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Django</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">FastAPI</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">REST APIs</span>
+                    </div>
+                </div>
+
+                <!-- Databases & Tools -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover space-y-4">
+                    <div class="flex items-center gap-3 text-purplePrimary">
+                        <i class="fa-solid fa-database text-xl"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Databases & Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">MySQL</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">MongoDB</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">PostgreSQL</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">SQLite</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Neo4j</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">ChromaDB</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">FAISS</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Git / GitHub</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Postman</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">VS Code</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Vite</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-mono text-gray-800 font-medium">Streamlit</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. Certifications & Achievements Section -->
+        <section id="achievements" class="space-y-8">
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Highlights</h3>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Certifications & Achievements</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Cloud Certification Card -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-l-4 border-l-purplePrimary space-y-4">
+                    <div class="flex justify-between items-start">
+                        <i class="fa-solid fa-cloud text-3xl text-purplePrimary"></i>
+                        <span class="text-[11px] font-mono bg-purpleLight text-purpleHover border border-purpleBorder px-2 py-0.5 rounded font-semibold">Certification</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Oracle Cloud Infrastructure Foundations Associate</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">
+                        Validated foundational knowledge of core cloud computing architectures and enterprise technologies.
+                    </p>
+                    <a href="#" class="inline-flex items-center gap-1.5 text-xs font-mono text-purplePrimary hover:text-purpleHover font-bold pt-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Verify Credential
+                    </a>
+                </div>
+
+                <!-- College Coding Challenge -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-l-4 border-l-purplePrimary space-y-4">
+                    <div class="flex justify-between items-start">
+                        <i class="fa-solid fa-trophy text-3xl text-purplePrimary"></i>
+                        <span class="text-[11px] font-mono bg-purpleLight text-purpleHover border border-purpleBorder px-2 py-0.5 rounded font-semibold">Top 3</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">College Coding & Innovation Challenge</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">
+                        Secured Top 3 among 500+ participants in the college coding and innovation challenge.
+                    </p>
+                </div>
+
+                <!-- Smart India Hackathon -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-l-4 border-l-purplePrimary space-y-4">
+                    <div class="flex justify-between items-start">
+                        <i class="fa-solid fa-users text-3xl text-purplePrimary"></i>
+                        <span class="text-[11px] font-mono bg-purpleLight text-purpleHover border border-purpleBorder px-2 py-0.5 rounded font-semibold">Top 10</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Smart India Hackathon Internal</h3>
+                    <p class="text-gray-600 text-xs leading-relaxed">
+                        Led a 5-member team to the Top 10 among 300+ teams in the institute-level Smart India Hackathon internal selection round.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 7. Contact Section -->
+        <section id="contact" class="space-y-8 pb-16">
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="text-xs font-mono uppercase tracking-widest text-purplePrimary mb-1">// Get In Touch</h3>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">Contact Me</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Info Column -->
+                <div class="lg:col-span-5 glass-panel p-6 sm:p-8 rounded-2xl flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-gray-900">Let's connect and build together</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Looking forward to SDE and AI/GenAI developer opportunities. Feel free to reach out directly!
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 font-mono text-xs sm:text-sm">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-200">
+                            <i class="fa-solid fa-envelope text-purplePrimary text-base"></i>
+                            <div>
+                                <span class="text-gray-500 block text-[10px]">EMAIL</span>
+                                <a href="mailto:nallamillipurnima@gmail.com" class="text-gray-900 font-semibold hover:text-purplePrimary">nallamillipurnima@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-200">
+                            <i class="fa-solid fa-phone text-purplePrimary text-base"></i>
+                            <div>
+                                <span class="text-gray-500 block text-[10px]">PHONE</span>
+                                <a href="tel:9391630959" class="text-gray-900 font-semibold hover:text-purplePrimary">+91 9391630959</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 pt-2">
+                        <a href="https://linkedin.com" target="_blank" class="text-gray-600 hover:text-purplePrimary text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="https://github.com" target="_blank" class="text-gray-600 hover:text-purplePrimary text-xl"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://leetcode.com" target="_blank" class="text-gray-600 hover:text-purplePrimary text-xl"><i class="fa-solid fa-code"></i></a>
+                    </div>
+                </div>
+
+                <!-- Form Column -->
+                <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-2xl">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-xs font-mono text-gray-700 font-medium">Name</label>
+                                <input type="text" required placeholder="Your Name" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purplePrimary focus:bg-white transition-all text-sm">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-mono text-gray-700 font-medium">Email</label>
+                                <input type="email" required placeholder="your.email@example.com" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purplePrimary focus:bg-white transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-xs font-mono text-gray-700 font-medium">Subject</label>
+                            <input type="text" required placeholder="SDE Role / Opportunity Inquiry" class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purplePrimary focus:bg-white transition-all text-sm">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-xs font-mono text-gray-700 font-medium">Message</label>
+                            <textarea required rows="4" placeholder="Hello Purnima..." class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purplePrimary focus:bg-white transition-all text-sm"></textarea>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-purplePrimary hover:bg-purpleHover text-white font-semibold shadow-md shadow-purplePrimary/20 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Send Message
+                        </button>
+                    </form>
+
+                    <div id="formStatus" class="hidden mt-4 p-4 rounded-xl text-center text-xs font-mono"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-gray-200 py-8 px-4 text-center text-xs text-gray-500 font-mono">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© Nallamilli Purnima. SDE Portfolio.</p>
+            <div class="flex items-center gap-4">
+                <a href="#hero" class="hover:text-purplePrimary font-medium">Back to Top ↑</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Script -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Project Category Filter
+        const filterButtons = document.querySelectorAll('#projectFilters .filter-btn');
+        const projectCards = document.querySelectorAll('#projectsGrid .project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-purplePrimary', 'text-white', 'shadow-sm');
+                    btn.classList.add('text-gray-600');
+                });
+                button.classList.add('active', 'bg-purplePrimary', 'text-white', 'shadow-sm');
+                button.classList.remove('text-gray-600');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filterValue === 'all' || filterValue === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 3. Resume Download Trigger
+        function downloadResume() {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'fixed bottom-5 right-5 z-50 glass-panel border border-purpleBorder p-4 rounded-xl text-gray-900 text-xs font-mono shadow-2xl flex items-center gap-3 animate-bounce';
+            statusDiv.innerHTML = '<i class="fa-solid fa-circle-check text-purplePrimary text-lg"></i> Downloading Purnima_Resume.pdf...';
+            document.body.appendChild(statusDiv);
+
+            setTimeout(() => {
+                statusDiv.remove();
+            }, 3500);
+        }
+
+        // 4. Contact Form Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Sending...';
+
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane text-xs"></i> Send Message';
+                
+                formStatus.classList.remove('hidden');
+                formStatus.className = 'mt-4 p-4 rounded-xl text-center text-xs font-mono bg-purpleLight text-purpleHover border border-purpleBorder font-semibold';
+                formStatus.innerText = 'Thank you! Your message has been sent successfully.';
+
+                document.getElementById('contactForm').reset();
+
+                setTimeout(() => {
+                    formStatus.classList.add('hidden');
+                }, 5000);
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
